@@ -20,4 +20,33 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Test Results
-        path: ./test_results.txt 
+        path: ./test_results.txt       
+
+    - name: Build convert, ctest, and Run Tests        
+        run: make convert; make ctest; ./test_script > test_results.txt; gcov ctest-convert.c
+
+    - name: Upload ctest executable            
+        uses: actions/upload-artifact@v4    
+        with:
+          name: ctest            
+          path: ./ctest
+      
+    - name: Upload convert executable            
+        uses: actions/upload-artifact@v4    
+        with:
+          name: convert            
+          path: ./convert
+
+    - name: Upload Test Results
+        if: ${{ always() }}
+
+        uses: actions/upload-artifact@v4
+        with:
+          name: Test Results
+          path: ./test_results.txt
+
+      - name: Upload Coverage Report            
+        uses: actions/upload-artifact@v4    
+        with:
+          name: coverage report            
+          path: "*.gcov"
