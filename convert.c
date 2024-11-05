@@ -24,12 +24,11 @@ void getInput(int argc, char *argv[], int *base, long *start, long *finish, int 
 
             if (i + 1 < argc) //checks if there is a next argument
             {
-                *base = atoi(argv[i + 1]); //converts next argument from string to int and sets base to that value
-                break;
+                *base = atoi(argv[i + 1]); //converts next argument from string to int and sets base to that value 
             }
         }
 
-        if (argv[i][0] == '-' && argv[i][1] == 'r')
+        else if (argv[i][0] == '-' && argv[i][1] == 'r')
         {
             if (i + 2 < argc)
             {
