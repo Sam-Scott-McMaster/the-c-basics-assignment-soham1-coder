@@ -2,14 +2,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void getInput(int argc, char *argv[], int *base);
-int convert(long,int);
+void getInput(int argc, char *argv[], int *base, long *start, long *finish);
+void convert(long,int);
 
 
-void getInput(int argc, char *argv[], int *base)
+void getInput(int argc, char *argv[], int *base, long *start, long *finish)
 {
 
     *base = 16; //default base is hex
+    *start = 0;
+    *finish = 0;
 
     for(int i = 1; i < argc; i++)
     {
@@ -19,7 +21,8 @@ void getInput(int argc, char *argv[], int *base)
 
             if (i + 1 < argc) //checks if there is a next argument
             {
-                *base = atoi(argv[i + 1]); //converts next argument from string to int
+                *base = atoi(argv[i + 1]); //converts next argument from string to int and sets base to that value
+                break;
             }
         }
     }
@@ -35,20 +38,22 @@ int main(int argc, char *argv[])
 {
     long input = 0; 
     int base;
+    long start;
+    long finish;
 
-    getInput(argc, argv, &base);
+    getInput(argc, argv, &base, &start, &finish);
 
     while (scanf("%ld", &input) != EOF) 
     {
-        printf("Enter number to convert");
-        convert(input,base);
+        printf("Enter number to convert\n");
+        convert(input, base);
         printf("\n");
 
 }
     return 0;
 }
 
-int convert(long num, int base)
+void convert(long num, int base)
 {
     char digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -56,7 +61,7 @@ int convert(long num, int base)
     if (num<0)
     {
         num = -num;
-        printf('-');
+        putchar('-');
     }
 
     //recursively converts given number to given base
@@ -65,9 +70,8 @@ int convert(long num, int base)
         convert(num/base, base);
     }
 
-    int digit = digits[num % base];
+    char digit = digits[num % base];
 
-    printf("%d", digit); //prints each digit of new number
-
+    putchar(digit); //prints each digit of new number
 
 }
