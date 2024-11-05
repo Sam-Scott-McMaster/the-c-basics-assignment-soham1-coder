@@ -2,20 +2,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void getInput(int argc, char *argv[], int *base, long *start, long *finish);
+void getInput(int argc, char *argv[], int *base, long *start, long *finish, int *range_mode);
 void convert(long,int);
 
 
-void getInput(int argc, char *argv[], int *base, long *start, long *finish)
+void getInput(int argc, char *argv[], int *base, long *start, long *finish, int *range_mode)
 {
 
     *base = 16; //default base is hex
     *start = 0;
     *finish = 0;
+    *range_mode = 0;
 
+    //iterates through given input
     for(int i = 1; i < argc; i++)
     {
 
+        //checks if base should be changed
         if (argv[i][0] == '-' && argv[i][1] == 'b') 
         {
 
@@ -25,8 +28,20 @@ void getInput(int argc, char *argv[], int *base, long *start, long *finish)
                 break;
             }
         }
+
+        if (argv[i][0] == '-' && argv[i][1] == 'r')
+        {
+            if (i + 2 < argc)
+            {
+                *start = atol(argv[i+1]);
+                *finish = atol(argv[i+2]);
+                *range_mode = 1;
+                break;
+            }
+        }
     }
 
+    //invalid base
     if (*base < 2 || *base > 36) 
     {
         fprintf(stderr, "Invalid base. Please enter a number between 2 and 36.\n");
@@ -40,21 +55,39 @@ int main(int argc, char *argv[])
     int base;
     long start;
     long finish;
+    int range_mode;
 
-    getInput(argc, argv, &base, &start, &finish);
+    getInput(argc, argv, &base, &start, &finish, &range_mode);
 
-    while (scanf("%ld", &input) != EOF) 
+    if (range_mode)
     {
-        printf("Enter number to convert\n");
-        convert(input, base);
-        printf("\n");
+        //convert a range of numbers
+        for (long i = start; i <= finish; i++) 
+        {
+            convert(i, base);
+            printf("\n");
+        }
+    }        
 
-}
+    else
+    {
+        //convert numbers one at a time
+
+        printf("Enter numbers to convert\n");
+        while (scanf("%ld", &input) != EOF) 
+        {
+            printf("Converted Number: ");
+            convert(input, base);
+            printf("\n");
+        }
+    }
+
     return 0;
 }
 
 void convert(long num, int base)
 {
+    //An array of all characters in all bases
     char digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     //case for negative number
