@@ -2,8 +2,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//function prototypes
 void getInput(int argc, char *argv[], int *base, long *start, long *finish, int *range_mode);
 void convert(long,int);
+
+void usage()
+{
+    fprintf(stderr, "Usage: convert [-b base] [-r START FINISH]");
+    fprintf(stderr,"\n 1 < BASE < 37");
+    fprintf(stderr, "\n START and FINISH are long integers\n");
+    exit(1);
+}
 
 
 void getInput(int argc, char *argv[], int *base, long *start, long *finish, int *range_mode)
@@ -28,6 +37,7 @@ void getInput(int argc, char *argv[], int *base, long *start, long *finish, int 
             }
         }
 
+        //checks if conversion should use a range
         else if (argv[i][0] == '-' && argv[i][1] == 'r')
         {
             if (i + 2 < argc)
@@ -35,7 +45,6 @@ void getInput(int argc, char *argv[], int *base, long *start, long *finish, int 
                 *start = atol(argv[i+1]);
                 *finish = atol(argv[i+2]);
                 *range_mode = 1;
-                break;
             }
         }
     }
@@ -43,8 +52,7 @@ void getInput(int argc, char *argv[], int *base, long *start, long *finish, int 
     //invalid base
     if (*base < 2 || *base > 36) 
     {
-        fprintf(stderr, "Invalid base. Please enter a number between 2 and 36.\n");
-        exit(1);
+        usage();
     }
 }
 
@@ -71,7 +79,6 @@ int main(int argc, char *argv[])
     else
     {
         //convert numbers one at a time
-
         printf("Enter numbers to convert\n");
         while (scanf("%ld", &input) != EOF) 
         {
