@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MIN_BASE 2
 #define MAX_BASE 36
@@ -9,12 +10,25 @@
 void getInput(int argc, char *argv[], int *base, long *start, long *finish, int *range_mode);
 void convert(long,int);
 
-
+//displays help and exits program
 void help()
 {
+    printf("\nBase Conversion Utility\n");
+    printf("------------------------------------------\n");
+    printf("This program converts numbers from decimal format to a specified base.\n\n");
+    
+    printf("Usage:");
+    printf(" convert [OPTIONS]\n\n");
 
+    printf("Options:\n");
+    printf("  -b BASE           Specify a base between %d and %d for conversion\n" , MIN_BASE, MAX_BASE);
+    printf("                    Default is base 16 (hexadecimal)\n");
+    printf("\n  -r START FINISH   Convert a range of numbers from START to FINISH\n");
 
-
+    printf("\nInteractive Mode:\n");
+    printf("  If no range is specified with -r, you can enter numbers one by one for conversion.\n");
+    printf("  Press CTRL+D to exit interactive mode.\n\n");
+    exit(1);
 
 }
 
@@ -40,8 +54,14 @@ void getInput(int argc, char *argv[], int *base, long *start, long *finish, int 
     for(int i = 1; i < argc; i++)
     {
 
+        //checks if user wants help
+        if (strcmp(argv[i], "--help")== 0)
+        {
+            help();
+        }
+
         //checks if base should be changed
-        if (argv[i][0] == '-' && argv[i][1] == 'b') 
+        else if (argv[i][0] == '-' && argv[i][1] == 'b') 
         {
 
             if (i + 1 < argc) //checks if there is a next argument
