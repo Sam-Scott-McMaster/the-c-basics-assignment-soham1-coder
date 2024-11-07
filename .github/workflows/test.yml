@@ -10,14 +10,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Run Tests
-      run: ./test_script > test_results.txt
-
-    - name: Generate Coverage Report
-      run: |
-        gcov convert.c
-        gcov convertNum.c
-        gcov convertUsageHelp.c
+    - name: Build convert and Run Tests
+      run: make convert; ./test_script > test_results.txt;
 
     - name: Upload convert Executable            
       uses: actions/upload-artifact@v4    
