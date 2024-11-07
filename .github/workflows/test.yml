@@ -10,16 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Run Tests
-      run: ./test_script > test_results.txt
-
-    - name: Upload Test Results
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: Test Results
-        path: ./test_results.txt       
-
     - name: Build convert and Run Tests        
       run: make convert; ./test_script > test_results.txt; gcov convert.c
       
@@ -29,6 +19,16 @@ jobs:
         name: convert            
         path: ./convert
 
+    - name: Upload Test Results
+      if: ${{ always() }}
+
+    - name: Upload Test Results
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: Test Results
+        path: ./test_results.txt
+    
     - name: Upload Coverage Report            
       uses: actions/upload-artifact@v4    
       with:
