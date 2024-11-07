@@ -2,44 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "convertNum.h"
+#include "convertUsageHelp.h"
 
 #define MIN_BASE 2
 #define MAX_BASE 36
 
 //function prototypes
 void getInput(int argc, char *argv[], int *base, long *start, long *finish, int *range_mode);
-void convert(long,int);
-
-//displays help and exits program
-void help()
-{
-    printf("\nBase Conversion Utility\n");
-    printf("------------------------------------------\n");
-    printf("This program converts numbers from decimal format to a specified base.\n\n");
-    
-    printf("Usage:");
-    printf(" convert [OPTIONS]\n\n");
-
-    printf("Options:\n");
-    printf("  -b BASE           Specify a base between %d and %d for conversion\n" , MIN_BASE, MAX_BASE);
-    printf("                    Default is base 16 (hexadecimal)\n");
-    printf("\n  -r START FINISH   Convert a range of numbers from START to FINISH\n");
-
-    printf("\nInteractive Mode:\n");
-    printf("  If no range is specified with -r, you can enter numbers one by one for conversion.\n");
-    printf("  Press CTRL+D to exit interactive mode.\n\n");
-    exit(1);
-
-}
-
-//displays the correct usage for the program
-void usage()
-{
-    fprintf(stderr, "Usage: convert [-b base] [-r START FINISH]");
-    fprintf(stderr,"\n 1 < BASE < 37");
-    fprintf(stderr, "\n START and FINISH are long integers\n");
-    exit(1);
-}
 
 //obtains input user and ensures the input is valid
 void getInput(int argc, char *argv[], int *base, long *start, long *finish, int *range_mode)
@@ -124,7 +94,7 @@ int main(int argc, char *argv[])
         //convert a range of numbers
         for (long i = start; i <= finish; i++) 
         {
-            convert(i, base);
+            convertNum(i, base);
             printf("\n");
         }
     }        
@@ -136,33 +106,10 @@ int main(int argc, char *argv[])
         while (scanf("%ld", &input) != EOF) 
         {
             printf("Converted Number: ");
-            convert(input, base);
+            convertNum(input, base);
             printf("\n");
         }
     }
 
     return 0;
-}
-
-//converts given number to given base
-void convert(long num, int base)
-{
-    //An array of all characters in all bases
-    char digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-    //case for negative number
-    if (num<0)
-    {
-        num = -num;
-        putchar('-');
-    }
-
-    //recursively converts given number to given base
-    if (num>=base)
-    {
-        convert(num/base, base);
-    }
-
-    char digit = digits[num % base];
-    putchar(digit); //prints each digit of new number
 }
