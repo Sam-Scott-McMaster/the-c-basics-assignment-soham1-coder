@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Build convert and Run Tests
-      run: make convert; ./test_script > test_results.txt; gcov convert.c; gcov convertNum.c; gcov convertUsageHelp.c;
+      run: make convert; ./test_script > test_results.txt; gcov convert-convert.c; gcov convert-convertNum.c; gcov convert-convertUsageHelp.c;
 
     - name: Upload convert Executable            
       uses: actions/upload-artifact@v4    
