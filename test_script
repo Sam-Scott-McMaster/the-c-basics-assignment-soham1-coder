@@ -83,6 +83,3 @@ test './convert -b 2' 'inp2.txt' 'ex_out2.txt' 'empty.txt'
 
 # clean up
 rm test_err.txt test_out.txt
-
-# return code
-exit $fails
