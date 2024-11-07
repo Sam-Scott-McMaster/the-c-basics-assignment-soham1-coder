@@ -9,6 +9,16 @@
 void getInput(int argc, char *argv[], int *base, long *start, long *finish, int *range_mode);
 void convert(long,int);
 
+
+void help()
+{
+
+
+
+
+}
+
+//displays the correct usage for the program
 void usage()
 {
     fprintf(stderr, "Usage: convert [-b base] [-r START FINISH]");
@@ -17,7 +27,7 @@ void usage()
     exit(1);
 }
 
-
+//obtains input user and ensures the input is valid
 void getInput(int argc, char *argv[], int *base, long *start, long *finish, int *range_mode)
 {
 
@@ -114,6 +124,7 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+//converts given number to given base
 void convert(long num, int base)
 {
     //An array of all characters in all bases
@@ -133,7 +144,5 @@ void convert(long num, int base)
     }
 
     char digit = digits[num % base];
-
     putchar(digit); //prints each digit of new number
-
 }
