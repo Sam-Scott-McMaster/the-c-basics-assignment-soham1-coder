@@ -102,10 +102,10 @@ int main(int argc, char *argv[])
     else
     {
         //convert numbers one at a time
-        printf("Enter numbers to convert\n");
+        //printf("Enter numbers to convert\n");
         while (scanf("%ld", &input) != EOF) 
         {
-            printf("Converted Number: ");
+            //printf("Converted Number: ");
             convertNum(input, base);
             printf("\n");
         }

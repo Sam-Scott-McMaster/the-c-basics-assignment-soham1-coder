@@ -1,5 +1,4 @@
-Enter numbers to convert
-Converted Number: 1
-Converted Number: F
-Converted Number: 10
-Converted Number: 3039
+1
+F
+10
+3039
