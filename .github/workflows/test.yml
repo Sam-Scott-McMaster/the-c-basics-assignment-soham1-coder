@@ -10,9 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Build convert
-      run: make convert
-
     - name: Run Tests
       run: ./test_script.sh > test_results.txt
 
