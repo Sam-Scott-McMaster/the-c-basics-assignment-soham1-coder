@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MIN_BASE 2
+#define MAX_BASE 36
+
 //function prototypes
 void getInput(int argc, char *argv[], int *base, long *start, long *finish, int *range_mode);
 void convert(long,int);
@@ -35,6 +38,13 @@ void getInput(int argc, char *argv[], int *base, long *start, long *finish, int 
             {
                 *base = atoi(argv[i + 1]); //converts next argument from string to int and sets base to that value 
             }
+
+            else
+            {
+                usage(); //if There is no next argument after "-b" then calls usage
+            }
+
+            i++; 
         }
 
         //checks if conversion should use a range
@@ -46,11 +56,24 @@ void getInput(int argc, char *argv[], int *base, long *start, long *finish, int 
                 *finish = atol(argv[i+2]);
                 *range_mode = 1;
             }
+
+
+            else
+            {
+                usage(); //if There are no two arguments after "-r" then calls usage
+            }
+
+            i+=2;
+        }
+
+        else
+        {
+            usage(); //calls usage if there are any unrecognized arguments
         }
     }
 
     //invalid base
-    if (*base < 2 || *base > 36) 
+    if (*base < MIN_BASE || *base > MAX_BASE) 
     {
         usage();
     }
